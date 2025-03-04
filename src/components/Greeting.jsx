@@ -1,9 +1,7 @@
-// src/components/Greeting.jsx
-
 import React, { useState } from 'react';
 
-function Greeting() {
-  const [message, setMessage] = useState('Welcome to React!');
+function Greeting({ username }) {
+  const [message, setMessage] = useState(`Hello, ${username}!`);
 
   const handleChange = (e) => {
     setMessage(e.target.value);  // Update message with the input value

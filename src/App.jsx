@@ -1,47 +1,50 @@
-// src/App.jsx
-
 import React, { useState } from 'react';
 import Greeting from './components/Greeting';
 import UserInfo from './components/UserInfo';
 import TaskComponent from './components/TaskComponent';
+import TaskForm from './components/TaskForm'; // Import TaskForm
 
 function App() {
   const [name, setName] = useState('Jon');
   const [age, setAge] = useState(25);
-  const [profession, setProfession] = useState('Developer'); // Profession state
+  const [profession, setProfession] = useState('Developer');
 
-  // Lucky number state
   const [luckyNumber, setLuckyNumber] = useState(Math.floor(Math.random() * 100) + 1);
 
-  // Create an array of tasks
+  // Task List
   const tasks = ['Learn React', 'Write Code', 'Attend Meeting', 'Complete Assignment', 'Go for a Walk'];
 
-  // Function to get a random task
-  const getRandomTask = () => {
-    const randomIndex = Math.floor(Math.random() * tasks.length);
-    return tasks[randomIndex];
+  // Handle button click alert
+  const handleAlert = () => {
+    alert('Alert, You clicked the button!');
   };
-
-  // Get the current date
-  const currentDate = new Date().toLocaleDateString();
 
   return (
     <div className="App">
-      <Greeting />
-      <UserInfo name={name} age={age} profession={profession} /> {/* Pass profession */}
-      
-      {/* Display the current date */}
-      <h3>Today's Date: {currentDate}</h3>
+      {/* Task 1: Props */}
+      <Greeting username="Alice" />
+      <Greeting username="Bob" />
 
-      {/* Display the random task */}
-      <h3>Random Task: {getRandomTask()}</h3>
+      {/* Task 2: User Info with Props */}
+      <UserInfo name={name} age={age} profession={profession} handleClick={handleAlert} />
 
-      {/* Show lucky number */}
+      {/* Task 3: Display List with Keys */}
+      <h3>Task List:</h3>
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>{task}</li>
+        ))}
+      </ul>
+
+      {/* Task 4: Lucky Number */}
       <h3>Your lucky number is: {luckyNumber}</h3>
-      
-      <TaskComponent />
+
+      {/* Task 5: Controlled Form */}
+      <h2>Add a New Task:</h2>
+      <TaskForm />
     </div>
   );
 }
 
 export default App;
+
