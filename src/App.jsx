@@ -1,50 +1,36 @@
+// src/App.jsx
+
 import React, { useState } from 'react';
 import Greeting from './components/Greeting';
 import UserInfo from './components/UserInfo';
 import TaskComponent from './components/TaskComponent';
-import TaskForm from './components/TaskForm'; // Import TaskForm
+import TaskForm from './components/TaskForm';
 
 function App() {
   const [name, setName] = useState('Jon');
   const [age, setAge] = useState(25);
   const [profession, setProfession] = useState('Developer');
+  const [tasks, setTasks] = useState([
+    { name: 'Buy groceries', description: 'Milk, eggs, bread' },
+    { name: 'Read a book', description: 'JavaScript for beginners' },
+  ]);
 
-  const [luckyNumber, setLuckyNumber] = useState(Math.floor(Math.random() * 100) + 1);
+  const addTask = (task) => {
+    setTasks([...tasks, task]);
+  };
 
-  // Task List
-  const tasks = ['Learn React', 'Write Code', 'Attend Meeting', 'Complete Assignment', 'Go for a Walk'];
-
-  // Handle button click alert
-  const handleAlert = () => {
-    alert('Alert, You clicked the button!');
+  const deleteTask = (taskName) => {
+    setTasks(tasks.filter((task) => task.name !== taskName));
   };
 
   return (
     <div className="App">
-      {/* Task 1: Props */}
-      <Greeting username="Alice" />
-      <Greeting username="Bob" />
-
-      {/* Task 2: User Info with Props */}
-      <UserInfo name={name} age={age} profession={profession} handleClick={handleAlert} />
-
-      {/* Task 3: Display List with Keys */}
-      <h3>Task List:</h3>
-      <ul>
-        {tasks.map((task, index) => (
-          <li key={index}>{task}</li>
-        ))}
-      </ul>
-
-      {/* Task 4: Lucky Number */}
-      <h3>Your lucky number is: {luckyNumber}</h3>
-
-      {/* Task 5: Controlled Form */}
-      <h2>Add a New Task:</h2>
-      <TaskForm />
+      <Greeting username={name} />
+      <UserInfo name={name} age={age} profession={profession} />
+      <TaskForm addTask={addTask} />
+      <TaskComponent tasks={tasks} deleteTask={deleteTask} />
     </div>
   );
 }
 
 export default App;
-

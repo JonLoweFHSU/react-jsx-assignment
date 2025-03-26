@@ -1,25 +1,37 @@
+// src/components/TaskForm.jsx
+
 import React, { useState } from 'react';
 
-function TaskForm() {
-  const [task, setTask] = useState('');
-
-  const handleInputChange = (e) => {
-    setTask(e.target.value);
-  };
+function TaskForm({ addTask }) {
+  const [taskName, setTaskName] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('New Task:', task);
-    setTask(''); // Clear input field after submission
+    
+    if (!taskName.trim() || !taskDescription.trim()) {
+      alert('Both fields are required.');
+      return;
+    }
+
+    addTask({ name: taskName, description: taskDescription });
+    setTaskName('');
+    setTaskDescription('');
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        value={task}
-        onChange={handleInputChange}
         placeholder="Enter Task Name"
+        value={taskName}
+        onChange={(e) => setTaskName(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Enter Description"
+        value={taskDescription}
+        onChange={(e) => setTaskDescription(e.target.value)}
       />
       <button type="submit">Add Task</button>
     </form>
